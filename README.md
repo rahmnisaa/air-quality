@@ -31,15 +31,5 @@ streamlit run dashboard.py
 - **Boxplot dalam satu grafik** untuk melihat distribusi berbagai polutan.
 - **Peta heatmap interaktif** dengan ukuran **persegi panjang** untuk visibilitas lebih baik.
 
-## 📌 Struktur Folder
-```
-repository-name/
-│── dashboard.py       # Kode utama untuk Streamlit Dashboard
-│── requirements.txt   # Daftar dependensi
-│── README.md          # Panduan ini
-```
-
-## 📝 Catatan
-Pastikan dataset yang digunakan telah **dibagikan secara publik** di Google Drive dan diperbarui di dalam kode.
 
 Jika mengalami kendala, silakan hubungi saya atau buat **Issue** di repository ini. 🚀
