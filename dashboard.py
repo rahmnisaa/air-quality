@@ -10,7 +10,7 @@ from streamlit_folium import folium_static
 # Fungsi untuk memuat data dari Google Drive
 @st.cache_data
 def load_data():
-    url = "https://drive.google.com/file/d/1HCl0uXbbOggLnpNLY0PwSa_AYsTgLuKi/view?usp=sharing"
+    url = "https://drive.google.com/uc?id=1HCl0uXbbOggLnpNLY0PwSa_AYsTgLuKi"
     df = pd.read_csv(url, parse_dates=['datetime'])
     return df
 
