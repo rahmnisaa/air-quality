@@ -31,33 +31,42 @@ df_filtered = df[(df["station"] == city) &
                  (df['datetime'].dt.date.between(date_range[0], date_range[1]))]
 
 st.title("📊 Dashboard Kualitas Udara")
-st.markdown("Analisis polusi udara berdasarkan data historis.")
+st.markdown("### Analisis polusi udara dengan visualisasi yang lebih estetik.")
+
+# Layout Grid 2x2
+col1, col2 = st.columns(2)
 
 # Plot Time Series
-st.subheader(f"📈 Tren {pollutant}")
-fig, ax = plt.subplots(figsize=(10, 5))
-ax.plot(df_filtered['datetime'], df_filtered[pollutant], label=pollutant, color='red')
-ax.set_xlabel("Tanggal")
-ax.set_ylabel(f"Konsentrasi {pollutant}")
-ax.legend()
-st.pyplot(fig)
+with col1:
+    st.subheader(f"📈 Tren {pollutant}")
+    fig, ax = plt.subplots(figsize=(5, 3))
+    ax.plot(df_filtered['datetime'], df_filtered[pollutant], label=pollutant, color='red', linewidth=1.5)
+    ax.set_xlabel("Tanggal")
+    ax.set_ylabel(f"Konsentrasi {pollutant}")
+    ax.legend()
+    st.pyplot(fig)
 
 # Histogram Polutan
-st.subheader(f"📊 Distribusi {pollutant}")
-fig, ax = plt.subplots(figsize=(7, 4))
-sns.histplot(df_filtered[pollutant], bins=30, kde=True, ax=ax, color='blue')
-ax.set_xlabel(f"Konsentrasi {pollutant}")
-st.pyplot(fig)
+with col2:
+    st.subheader(f"📊 Distribusi {pollutant}")
+    fig, ax = plt.subplots(figsize=(5, 3))
+    sns.histplot(df_filtered[pollutant], bins=30, kde=True, ax=ax, color='blue')
+    ax.set_xlabel(f"Konsentrasi {pollutant}")
+    st.pyplot(fig)
 
 # Boxplot Polutan
-st.subheader(f"📦 Boxplot {pollutant}")
-fig, ax = plt.subplots(figsize=(6, 4))
-sns.boxplot(y=df_filtered[pollutant], ax=ax, color='green')
-ax.set_ylabel(f"Konsentrasi {pollutant}")
-st.pyplot(fig)
+with col1:
+    st.subheader(f"📦 Boxplot {pollutant}")
+    fig, ax = plt.subplots(figsize=(5, 3))
+    sns.boxplot(y=df_filtered[pollutant], ax=ax, color='green')
+    ax.set_ylabel(f"Konsentrasi {pollutant}")
+    st.pyplot(fig)
 
 # Peta Interaktif dengan Heatmap
-st.subheader("🗺️ Peta Kualitas Udara")
-m = folium.Map(location=[df_filtered['latitude'].mean(), df_filtered['longitude'].mean()], zoom_start=10)
-HeatMap(data=list(zip(df_filtered['latitude'], df_filtered['longitude'], df_filtered[pollutant]))).add_to(m)
-folium_static(m)
+with col2:
+    st.subheader("🗺️ Peta Kualitas Udara")
+    m = folium.Map(location=[df_filtered['latitude'].mean(), df_filtered['longitude'].mean()], zoom_start=10)
+    HeatMap(data=list(zip(df_filtered['latitude'], df_filtered['longitude'], df_filtered[pollutant]))).add_to(m)
+    folium_static(m)
+
+st.markdown("---")
