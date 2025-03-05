@@ -50,23 +50,23 @@ with col1:
         ax.legend()
         st.pyplot(fig)
 
-# Histogram untuk Polutan
+# Histogram untuk Polutan (ditumpuk berbeda warna)
 with col2:
+    st.subheader("📊 Distribusi Polutan")
+    fig, ax = plt.subplots(figsize=(5, 3))
     for pollutant in pollutants:
-        st.subheader(f"📊 Distribusi {pollutant}")
-        fig, ax = plt.subplots(figsize=(5, 3))
-        sns.histplot(df_filtered[pollutant], bins=30, kde=True, ax=ax)
-        ax.set_xlabel(f"Konsentrasi {pollutant}")
-        st.pyplot(fig)
+        sns.histplot(df_filtered[pollutant], bins=30, kde=True, ax=ax, label=pollutant, alpha=0.5)
+    ax.set_xlabel("Konsentrasi Polutan")
+    ax.legend()
+    st.pyplot(fig)
 
-# Boxplot untuk Polutan
+# Boxplot untuk Polutan (sebelahan dalam satu kotak)
 with col1:
-    for pollutant in pollutants:
-        st.subheader(f"📦 Boxplot {pollutant}")
-        fig, ax = plt.subplots(figsize=(5, 3))
-        sns.boxplot(y=df_filtered[pollutant], ax=ax)
-        ax.set_ylabel(f"Konsentrasi {pollutant}")
-        st.pyplot(fig)
+    st.subheader("📦 Boxplot Polutan")
+    fig, ax = plt.subplots(figsize=(5, 3))
+    sns.boxplot(data=df_filtered[pollutants], ax=ax)
+    ax.set_ylabel("Konsentrasi Polutan")
+    st.pyplot(fig)
 
 # Plot Time Series untuk Variabel Tambahan
 with col2:
@@ -88,3 +88,5 @@ with col3:
     for pollutant in pollutants:
         HeatMap(data=list(zip(df_filtered['latitude'], df_filtered['longitude'], df_filtered[pollutant]))).add_to(m)
     folium_static(m, width=800, height=500)
+
+st.markdown("---")
